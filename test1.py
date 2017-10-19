@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-'''
+
 import sys
+import json
+'''
 args = sys.argv[1:]
 index = args.index('-c')
 configfile = args[index+1]
 index = args.index('-d')
-useratafile = args[index+1]
+userdatafile = args[index+1]
 index = args.index('-o')
 outputfile= args[index+1]
-
-a = 
-
 '''
+configfile = '/home/shiyanlou/c.txt'
+userdatafile = '/home/shiyanlou/d.txt'
+outputfile = '/home/shiyanlou/o.txt'
 
 class Config():
 	def __init__(self,configfile):
@@ -51,7 +53,7 @@ class UserData():
 				tline = line.strip('\n')
 				tmp = tline.split(',')
 				self._userdata[count] = [tmp[0],int(tmp[1])]
-
+		self.number = count
 
 '''
 				tmp = ['100','1000']
@@ -98,13 +100,30 @@ class UserData():
 
 		return salary*(1 - rate) - tax
 		
-	def dumpptofile(self,putputfile):
+	def dumpptofile(self,outputfile):
+		sf = []
+		stand ='0123456789.'
+		for k in range(self.number):
+			s = json.dumps(d[k])
+			tmp = s.split(',')
+			for i in range(len(tmp)):	
+				for c in tmp[i]:
+					if not c in stand:
+						tmp[i] = tmp[i].replace(c,'')
+
+			dit = ','
+			sf[k] = dit.join(tmp)
+		print(sf)
+
+
+c = Config(configfile)
+d = UserData(userdatafile,c)
+
+d.dumpptofile()
 
 
 
-filename2 = 'home/shiyanlou/d.txt'
-with open(filename2) as file:
-'''
+
 
 
 
