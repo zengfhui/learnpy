@@ -31,16 +31,18 @@ class Config():
 			self._rate = tmp - self._config['JiShuL'] - self._config['JiShuH']
 		except:
 			print("the configfile have the error")
-
+	@property
 	def get_JiShuL(self):
 		return self._JiShuiL
+	@property
 	def get_JiShuH(self):
 		return self._JiShuH
+	@property
 	def get_rate(self):
 		return self._rate
 
 class UserData():
-	def __init__(self,userdatafile):
+	def __init__(self,userdatafile,Config):
 		self._userdata = dict()
 		wiht open(userdatafile) as file:
 			count = 0
@@ -64,8 +66,15 @@ class UserData():
 '''
 	def caculator(self):
 
-		rate = 0.165	# 0.08 + 0.02 + 0.005 + 0.06 
-
+		rate = Config.get_rate	# 0.08 + 0.02 + 0.005 + 0.06 
+		shebao = 0
+		if salary < Config.get_JiShuL:
+			shebao = 2193 * rate
+		elif salary > Config.get_JiShuH:
+			shebao = 16646 * rate
+		else:
+			shebao = salary * rate
+		
 		amount = salary * (1 - rate) - 3500
 		tax = 0
 		#tax = 0 is impotant! if loss, 
