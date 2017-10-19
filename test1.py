@@ -17,22 +17,22 @@ outputfile = '/home/shiyanlou/o.txt'
 
 class Config():
 	def __init__(self,configfile):
-		configfile = '/home/shiyanlou/c.cfg'
 		self._config =dict()
 		with open(configfile) as file:
 			for line in file:
 				tline = line.strip('\n')
-				tmp = tline.split('=')
+				tmp = tline.split('=')		# remebre rid of the kongge ,fouze wei 'JiShul ' er bu shi 'JisShuL'
 				self._config[tmp[0]] = float(tmp[1])
-		try:
-			self._JiShuL = self._config['JiShuL'] 
-			self._JiShuH = slef._config['JiShuH']
-			tmp = 0
-			for key,value in self._config.items():
-				tmp = tmp + value
-			self._rate = tmp - self._config['JiShuL'] - self._config['JiShuH']
-		except:
-			print("the configfile have the error")
+
+#		try:
+		self._JiShuL = self._config['JiShuL'] 
+		self._JiShuH = self._config['JiShuH']
+		tmp = 0
+		for key,value in self._config.items():
+			tmp = tmp + value
+		self._rate = tmp - self._config['JiShuL'] - self._config['JiShuH']
+#		except:
+#			print("the configfile have the error")
 	@property
 	def get_JiShuL(self):
 		return self._JiShuiL
@@ -46,26 +46,26 @@ class Config():
 class UserData():
 	def __init__(self,userdatafile,Config):
 		self._userdata = dict()
-		wiht open(userdatafile) as file:
+		with open(userdatafile) as file:
 			count = 0
 			for line in file:
 				count += 1
 				tline = line.strip('\n')
-				tmp = tline.split(',')
+				tmp = tline.split(':')
 				self._userdata[count] = [tmp[0],int(tmp[1])]
 		self.number = count
 
-'''
-				tmp = ['100','1000']
-				d = dict()
-				d[1] = [tmp[0],int(tmp[1])]
 
-				print(d)
-				d = 1 : ['100',1000]
+#				tmp = ['100','1000']
+#				d = dict()
+#				d[1] = [tmp[0],int(tmp[1])]
+#
+#				print(d)
+#				d = 1 : ['100',1000]
+#
+#				print(d[1][0])
+#				'100'
 
-				print(d[1][0])
-				'100'
-'''
 	def caculator(self):
 
 		rate = Config.get_rate	# 0.08 + 0.02 + 0.005 + 0.06 
@@ -115,11 +115,12 @@ class UserData():
 			sf[k] = dit.join(tmp)
 		print(sf)
 
-
+	def __getitem__(self,key):
+		return self._userdata.get()
 c = Config(configfile)
 d = UserData(userdatafile,c)
 
-d.dumpptofile()
+d.dumpptofile(outputfile)
 
 
 
