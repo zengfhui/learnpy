@@ -1,0 +1,3 @@
+JiShuL= 1300
+JiShuH= 15000
+YaoLao= 5000
