@@ -31,14 +31,11 @@ class Config():
 			for key,value in self._config.items():
 				tmp = tmp + value
 			self._rate = tmp - self._config['JiShuL'] - self._config['JiShuH']
-			print(tmp)
-			print(self._rate)
-			print('36n')
 		except:
 			print("the configfile have the error")
 	@property
 	def get_JiShuL(self):
-		return self._JiShuiL
+		return self._JiShuL
 	@property
 	def get_JiShuH(self):
 		return self._JiShuH
@@ -48,7 +45,7 @@ class Config():
 
 
 class UserData():
-	def __init__(self,userdatafile,Config):
+	def __init__(self,userdatafile):
 		self._userdata = dict()
 		with open(userdatafile) as file:
 			count = 0
@@ -70,7 +67,7 @@ class UserData():
 #				print(d[1][0])
 #				'100'
 
-	def caculator(self,salary):
+	def caculator(self,salary,Config):
 
 		rate = Config.get_rate()	 
 		shebao = 0.0
@@ -109,7 +106,7 @@ class UserData():
 		s.append(after_salary)
 		return s
 		
-	def dumpptofile(self,outputfile):
+	def dumpptofile(self,outputfile,Config):
 		sf = []
 		stand ='0123456789.'
 		for k in range(self.number):
@@ -122,7 +119,7 @@ class UserData():
 
 			dit = ','
 			sf.append (dit.join(tmp))
-		print(sf)
+		print(sf,'122n')
 
 		with open(outputfile,'w') as file:
 			for i in range(len(sf)):
@@ -130,18 +127,19 @@ class UserData():
 				#print(self._userdata[i+1][1]) 
 				#print(type(self._userdata[i+1][1])) 
 				salary = self._userdata[i+1][1]
-				sf.extend(self.caculator(salary))
+				sf.extend(self.caculator(salary,Config))
 				#print(t)
-
+			print(sf)
 
 			
 
 
 
 c = Config(configfile)
-d = UserData(userdatafile,c)
+d = UserData(userdatafile)
 
-d.dumpptofile(outputfile)
+d.dumpptofile(outputfile,c)
+
 
 
 
